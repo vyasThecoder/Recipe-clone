@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Food Recipe</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="w-full min-h-screen bg-gray-50 text-gray-800">
+    <div class="w-full flex justify-center items-center flex-col">
+      <header
+        class="w-full relative bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400"
+      >
+        <div
+          class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
+        >
+          <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20%" cy="30%" r="120" fill="white" />
+            <circle cx="80%" cy="70%" r="150" fill="white" />
+          </svg>
+        </div>
+
+        <div
+          class="max-w-7xl mx-auto px-6 py-16 flex flex-col lg:flex-row items-center gap-10 relative z-[5000]"
+        >
+          <!-- Text -->
+          <div class="flex-2 text-white">
+            <span
+              class="px-4 py-1 bg-white/20 rounded-full text-sm font-light backdrop-blur-md border border-white/30"
+              >🍽️ Made For Portfolio</span
+            >
+            <h1
+              class="mt-4 text-4xl sm:text-6xl font-extrabold leading-tight drop-shadow-lg"
+            >
+              Discover
+              <span
+                class="text-black bg-white px-2 rounded-md rotate-2 inline-block"
+                >Delicious</span
+              >
+              Recipes
+            </h1>
+            <p class="mt-4 text-lg text-white/90 max-w-lg">
+              Search recipes by name, explore food by category or cuisine. Fully
+              responsive & modern UI.
+            </p>
+            <!-- Search controls -->
+            <div
+              class="mt-8 bg-white/20 backdrop-blur-xl p-4 rounded-xl border border-white/30 shadow-lg text-black"
+            >
+              <div class="grid grid-cols-1 gap-3">
+                <!-- Input + Suggest Box -->
+                <div class="relative flex items-center gap-2 w-full">
+                  <input
+                    id="search-input"
+                    placeholder="Search by name..."
+                    class="w-full px-4 py-3 rounded-md bg-white shadow focus:ring-2 focus:ring-yellow-300 outline-none"
+                  />
+
+                  <button
+                    id="search-btn"
+                    class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-900 active:scale-95"
+                  >
+                    Search
+                  </button>
+
+                  <!-- Suggestion Box -->
+                  <ul
+                    id="suggestions-list"
+                    class="absolute hidden left-0 top-[105%] bg-white border rounded-lg w-full shadow-lg max-h-96 overflow-y-auto z-[5000]"
+                  ></ul>
+                </div>
+
+                <!-- Dropdown Filters -->
+                <div class="flex justify-center items-center gap-2">
+                  <select
+                    id="Choose-country"
+                    class="w-full px-4 py-3 rounded-md shadow bg-white max-h-80"
+                  ></select>
+                  <select
+                    id="Choose-category"
+                    class="w-full px-4 py-3 rounded-md shadow bg-white max-h-80"
+                  ></select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="w-full lg:w-1/2 relative">
+            <div
+              class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white rotate-1 hover:rotate-0 transition-all duration-500 cursor-pointer"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=1400&auto=format&fit=crop"
+                class="object-cover w-full h-72"
+                alt="Delicious food"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main
+        class="w-full max-w-7xl mx-auto flex flex-col justify-center items-center mt-10 relative p-2"
+      >
+        <div
+          id="recently"
+          class="w-full hidden flex flex-col justify-center items-center"
+        >
+          <h2 class="text-xl font-semibold mb-6 text-start w-full">
+            Recently Viewed Dishes
+          </h2>
+
+          <div
+            class="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 3xl:grid-cols-5 gap-2 md:gap-6 mt-8"
+            id="recently-card-container"
+          ></div>
+        </div>
+
+        <div class="w-full flex flex-col justify-center items-center mt-10">
+          <h2 class="text-xl font-semibold mb-6 text-start w-full">Recipes</h2>
+
+          <div
+            class="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 3xl:grid-cols-5 gap-2 md:gap-6 mt-8"
+            id="card-container"
+          ></div>
+        </div>
+      </main>
+      <!-- VIEW SECTION -->
+      <div
+        id="view-box"
+        class="hidden fixed inset-0 bg-[#000000bb] flex justify-center items-center z-[10000]"
+      >
+        <div
+          class="bg-white md:w-[45%] w-full max-h-[90vh] overflow-y-auto rounded-xl p-5 relative shadow-lg flex justify-start items-center flex-col"
+        >
+          <div class="flex justify-between items-center w-full mb-3">
+            <h2
+              id="dish-name"
+              class="text-lg font-semibold w-full mb-3 text-start"
+            ></h2>
+            <button
+              id="close-btn"
+              class="text-lg active:scale-95 cursor-pointer px-2 py-1 rounded-full hover:bg-gray-100"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <img
+            id="dish-image"
+            src=""
+            alt="Dish Image"
+            class="w-full md:w-[70%] h-60 object-cover object-center rounded-lg mb-4"
+          />
+
+          <h3 class="text-lg font-semibold mb-3 w-full text-start">
+            Ingredients:
+          </h3>
+          <ul
+            id="ingredients-list"
+            class="list-disc space-y-2 grid grid-cols-1 md:grid-cols-2 w-full pl-5 mb-5"
+          ></ul>
+
+          <h3 class="text-lg font-semibold mb-2 w-full text-start">
+            How To Make:
+          </h3>
+          <p
+            id="dish-instructions"
+            class="text-sm text-[#4E342E] leading-relaxed mb-4 text-justify"
+          ></p>
+
+          <h3 class="text-lg font-semibold mb-2 w-full text-start">
+            Watch Video:
+          </h3>
+          <a
+            id="dish-video"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full underline font-medium hover:text-[#6A3A1A]"
+          >
+            Watch on YouTube 🎥
+          </a>
+        </div>
+      </div>
+
+      <!-- FOOTER SECTION -->
+
+      <footer class="w-full text-black mt-16">
+        <div
+          class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10"
+        >
+          <!-- Brand -->
+          <div>
+            <h2 class="text-2xl font-bold text-black">FoodieHub</h2>
+            <p class="mt-3 text-black text-sm">
+              Discover Delicious Recipes, Learn Cooking & Explore Tastes From
+              Around The World.
+            </p>
+
+            <!-- Social Icons -->
+            <div class="flex gap-4 mt-4">
+              <i
+                class="fab fa-facebook cursor-pointer hover:text-black transition"
+              ></i>
+              <i
+                class="fab fa-instagram cursor-pointer hover:text-black transition"
+              ></i>
+              <i
+                class="fab fa-youtube cursor-pointer hover:text-black transition"
+              ></i>
+              <i
+                class="fab fa-github cursor-pointer hover:text-black transition"
+              ></i>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="font-semibold text-xl mb-3 text-black">Quick Links</h3>
+            <ul class="space-y-2 text-black text-sm">
+              <li class="hover:text-white cursor-pointer transition">Home</li>
+              <li class="hover:text-white cursor-pointer transition">
+                Categories
+              </li>
+              <li class="hover:text-white cursor-pointer transition">
+                Top Recipes
+              </li>
+              <li class="hover:text-white cursor-pointer transition">
+                Contact
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources -->
+          <div>
+            <h3 class="font-semibold text-xl mb-3 text-black">Resources</h3>
+            <ul class="space-y-2 text-black text-sm">
+              <li class="hover:text-white cursor-pointer transition">
+                API Docs
+              </li>
+              <li class="hover:text-white cursor-pointer transition">
+                License
+              </li>
+              <li class="hover:text-white cursor-pointer transition">
+                Privacy Policy
+              </li>
+              <li class="hover:text-white cursor-pointer transition">
+                Terms of Service
+              </li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div>
+            <h3 class="font-semibold text-xl mb-3 text-black">
+              Join Newsletter
+            </h3>
+            <p class="text-sm text-black">
+              Weekly new recipes straight to your inbox.
+            </p>
+
+            <div class="mt-4 flex gap-2">
+              <input
+                id="newsletter-email"
+                class="w-full px-3 py-2 rounded-lg text-black focus:ring-2 focus:ring-yellow-400 outline-none"
+                placeholder="Enter email..."
+                type="email"
+              />
+              <button
+                id="newsletter-join"
+                class="bg-yellow-400 px-4 py-2 rounded-lg hover:bg-yellow-500 transition font-semibold"
+              >
+                Join
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Strip -->
+        <div class="bg-[#111] py-4 text-center text-gray-400 text-sm">
+          © 2025 FoodieHub • Designed by Abhishek Vyas
+        </div>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
