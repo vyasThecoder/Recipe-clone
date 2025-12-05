@@ -51,7 +51,7 @@ function renderDishCard(error) {
           }</p>
           <div class="flex justify-center items-center mt-3">
             <button onclick="showViewBox('${val.idMeal}')" 
-            class="w-[90%] py-1 border border-[#FAA131]  text-black hover:bg-[#FAA131] hover:text-white rounded-lg active:scale-95">View</button>
+            class="w-[90%] py-1 border border-[#FAA131]  text-black hover:bg-[#FAA131] hover:text-white rounded-lg active:scale-95">Explore</button>
           </div>
         </div>
       </div>
@@ -78,23 +78,29 @@ function renderLatestDishCard(error) {
 
   latestCardContainer.innerHTML = LATEST_VIEW.map(
     (val) => `
-      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:scale-[1.02] duration-200">
-        <img src="${val.strMealThumb}" class="w-full h-52 object-cover" alt="${
-      val.strMeal
-    }" />
-        <div class="p-4">
-          <p class="text-sm font-semibold text-black">${
-            val.strMeal.length > 28
-              ? val.strMeal.slice(0, 25) + "..."
-              : val.strMeal
-          }</p>
+      <div class="min-w-[160px] sm:min-w-[180px] bg-white rounded-xl overflow-hidden shadow-lg hover:scale-[1.02] duration-200">
+        <img src="${val.strMealThumb}" 
+          class="w-full h-40 object-cover"
+          alt="${val.strMeal}" />
+
+        <div class="p-3">
+          <p class="text-sm font-semibold text-black truncate">
+            ${
+              val.strMeal.length > 28
+                ? val.strMeal.slice(0, 25) + "..."
+                : val.strMeal
+            }
+          </p>
+
           <div class="flex justify-center items-center mt-3">
-            <button onclick="showViewBox('${val.idMeal}')" 
-            class="w-[90%] py-1 border border-[#FAA131]  text-black hover:bg-[#FAA131] hover:text-white rounded-lg active:scale-95">View</button>
+            <button onclick="showViewBox('${val.idMeal}')"
+              class="w-full py-1 border border-[#FAA131] text-black hover:bg-[#FAA131] hover:text-white rounded-lg active:scale-95">
+             Explore
+            </button>
           </div>
         </div>
       </div>
-    `
+  `
   ).join("");
 }
 
